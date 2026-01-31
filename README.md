@@ -33,4 +33,6 @@ Identifies and ranks the most frequent relationships this wallet has established
 * **UI Focus:** Features a "Short-Address" formatter (e.g., `0x123...abc`) and filtered logic to separate incoming vs. outgoing gas costs.
 * **Optimization:** Splits the scan into two separate branches (Incoming vs. Outgoing) to allow the database to use native column indexes.
 
+## :camera_flash: Snapshot 
+
 <img width="3734" height="4294" alt="dune-ethereum-wallet" src="https://github.com/user-attachments/assets/8f7dbe05-d35b-42f9-9804-c461e81ca4ef" />
