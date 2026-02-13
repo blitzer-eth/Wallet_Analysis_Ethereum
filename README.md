@@ -6,6 +6,14 @@ This dashboard provides a comprehensive technical and financial overview of any 
 
 The dashboard uses a high-performance architecture to ensure that even "whale" wallets with thousands of transactions load efficiently.
 
+---
+
+## :camera_flash: Snapshot 
+
+<img width="3734" height="4294" alt="dune-ethereum-wallet" src="https://github.com/user-attachments/assets/8f7dbe05-d35b-42f9-9804-c461e81ca4ef" />
+
+---
+
 ## 🔍 Query Breakdown
 
 ### 1. Gas Usage & Cumulative Spend
@@ -32,7 +40,3 @@ Identifies and ranks the most frequent relationships this wallet has established
 * **Financial Insight:** Tracks gas spent per counterparty and the timeframe of the relationship (First/Last Interaction).
 * **UI Focus:** Features a "Short-Address" formatter (e.g., `0x123...abc`) and filtered logic to separate incoming vs. outgoing gas costs.
 * **Optimization:** Splits the scan into two separate branches (Incoming vs. Outgoing) to allow the database to use native column indexes.
-
-## :camera_flash: Snapshot 
-
-<img width="3734" height="4294" alt="dune-ethereum-wallet" src="https://github.com/user-attachments/assets/8f7dbe05-d35b-42f9-9804-c461e81ca4ef" />
