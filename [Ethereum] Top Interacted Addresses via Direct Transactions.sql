@@ -36,9 +36,9 @@ SELECT
   LOWER(
     CONCAT(
       '0x',
-      SUBSTRING(TO_HEX(counterparty), 1, 3),
+      SUBSTRING(TO_HEX(counterparty), 1, 2),
       '...',
-      SUBSTRING(TO_HEX(counterparty), -3)
+      SUBSTRING(TO_HEX(counterparty), -2)
     )
   ) AS counterparty_short,
   tx_count,
@@ -47,4 +47,4 @@ SELECT
   last_interaction
 FROM tx_stats
 ORDER BY tx_count DESC
-LIMIT 15;
+LIMIT 10;
