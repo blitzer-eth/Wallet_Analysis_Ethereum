@@ -10,7 +10,7 @@ The dashboard uses a high-performance architecture to ensure that even "whale" w
 
 ## :camera_flash: Snapshot 
 
-<img width="3734" height="4294" alt="dune-ethereum-wallet" src="https://github.com/user-attachments/assets/8f7dbe05-d35b-42f9-9804-c461e81ca4ef" />
+<img width="3734" height="4839" alt="image" src="https://github.com/user-attachments/assets/47283490-c885-4659-9417-6874b486b18a" />
 
 ---
 
