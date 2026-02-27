@@ -40,3 +40,18 @@ Identifies and ranks the most frequent relationships this wallet has established
 * **Financial Insight:** Tracks gas spent per counterparty and the timeframe of the relationship (First/Last Interaction).
 * **UI Focus:** Features a "Short-Address" formatter (e.g., `0x123...abc`) and filtered logic to separate incoming vs. outgoing gas costs.
 * **Optimization:** Splits the scan into two separate branches (Incoming vs. Outgoing) to allow the database to use native column indexes.
+
+### 4. Daily and Total NFTs Sold
+
+A volume-specific monitor for outbound digital assets.
+
+* **Inventory Outflow:** Specifically counts how many NFTs (ERC-721 and ERC-1155) leave the wallet daily.
+* **Sales Momentum:** Useful for tracking selling streaks and total lifetime inventory moved.
+
+### 5. NFT Trade
+
+Tracks the financial performance of NFT flips and acquisitions over time.
+
+* **Gas Adjusted:** Accurately subtracts the specific gas cost of each transaction to reveal true net profit.
+* **Multi-Asset:** Dynamically pulls minute-by-minute WETH price data to convert USD amounts back to their exact ETH value at the time of the trade.
+* **Signed Flow:** Buy orders are displayed as negative values, while sales are positive.
