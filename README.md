@@ -16,7 +16,7 @@ The dashboard uses a high-performance architecture to ensure that even "whale" w
 
 ## 🔍 Query Breakdown
 
-### 1. [Ethereum] Gas Spend Counter
+### 1. Gas Spend Counter
 
 A dedicated financial tracker for network fees, essential for understanding the cost of maintaining an active presence on Ethereum.
 
@@ -24,7 +24,7 @@ A dedicated financial tracker for network fees, essential for understanding the 
 * **Cumulative Analysis:** Visualizes the lifetime cost of wallet operations.
 * **Optimization:** Calculated by aggregating gas costs before applying window functions to minimize compute time.
 
-### 2. [Ethereum] Transaction Counter
+### 2. Transaction Counter
 
 A comprehensive monitor of the wallet's "on-chain footprint" across every major Ethereum interaction layer.
 
@@ -32,7 +32,7 @@ A comprehensive monitor of the wallet's "on-chain footprint" across every major 
 * **Standard Coverage:** Automatically tracks ERC-20, ERC-721 (NFTs), and ERC-1155 (Single & Batch) events.
 * **Optimization:** Built using a `UNION ALL` pattern instead of multiple `FULL OUTER JOINs`, allowing the query to scan each event table independently for maximum speed.
 
-### 3. [Ethereum] Top Interacted Counterparties
+### 3. Top Interacted Counterparties
 
 Identifies and ranks the most frequent relationships this wallet has established.
 
