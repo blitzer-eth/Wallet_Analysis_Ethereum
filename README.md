@@ -4,7 +4,7 @@
 
 This dashboard provides a comprehensive technical and financial overview of any wallet on the **Ethereum Mainnet**. It is designed to transform complex on-chain data into actionable insights, focusing on high-value transactions, multi-standard activity, and long-term network engagement.
 
-The dashboard uses a high-performance architecture to ensure that even "whale" wallets with thousands of transactions load efficiently.
+The dashboard uses a high-performance architecture to ensure that even "whale" wallets with thousands of transactions load efficiently. It provides a real-time view of portfolio health and activity levels using three core modules.
 
 ---
 
