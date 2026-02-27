@@ -1,5 +1,17 @@
-WITH address_val AS (
-  SELECT FROM_HEX(SUBSTRING('{{wallet address:}}', 3)) AS addr
+WITH time_filter AS (
+  SELECT 
+    CASE 
+      WHEN '{{Time Period}}' = 'Past Week'     THEN CURRENT_DATE - INTERVAL '7' day
+      WHEN '{{Time Period}}' = 'Past Month'    THEN CURRENT_DATE - INTERVAL '30' day
+      WHEN '{{Time Period}}' = 'Past 3 Months' THEN CURRENT_DATE - INTERVAL '90' day
+      WHEN '{{Time Period}}' = 'Past Year'     THEN CURRENT_DATE - INTERVAL '365' day
+      WHEN '{{Time Period}}' = 'All Time'      THEN CAST('2015-07-30' AS DATE)
+      ELSE CURRENT_DATE - INTERVAL '30' day
+    END AS start_date
+),
+
+address_val AS (
+  SELECT FROM_HEX(LOWER(REPLACE(TRIM('{{wallet address:}}'), '0x', ''))) AS addr
 ),
 
 raw_interactions AS (
@@ -7,8 +19,11 @@ raw_interactions AS (
     "to" AS counterparty, 
     gas_used * gas_price AS gas_spent, 
     block_time 
-  FROM ethereum.transactions, address_val 
+  FROM ethereum.transactions
+  CROSS JOIN address_val
+  CROSS JOIN time_filter
   WHERE "from" = addr
+    AND block_time >= start_date
 
   UNION ALL
 
@@ -16,8 +31,11 @@ raw_interactions AS (
     "from" AS counterparty, 
     0 AS gas_spent,
     block_time 
-  FROM ethereum.transactions, address_val 
+  FROM ethereum.transactions
+  CROSS JOIN address_val
+  CROSS JOIN time_filter
   WHERE "to" = addr
+    AND block_time >= start_date
 ),
 
 tx_stats AS (
