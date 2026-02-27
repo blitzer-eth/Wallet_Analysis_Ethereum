@@ -1,35 +1,65 @@
-WITH address AS (
-  SELECT FROM_HEX(LOWER(REPLACE('{{wallet address:}}', '0x', ''))) AS addr
+WITH time_filter AS (
+  SELECT 
+    CASE 
+      WHEN '{{Time Period}}' = 'Past Week'     THEN CURRENT_DATE - INTERVAL '7' day
+      WHEN '{{Time Period}}' = 'Past Month'    THEN CURRENT_DATE - INTERVAL '30' day
+      WHEN '{{Time Period}}' = 'Past 3 Months' THEN CURRENT_DATE - INTERVAL '90' day
+      WHEN '{{Time Period}}' = 'Past Year'     THEN CURRENT_DATE - INTERVAL '365' day
+      WHEN '{{Time Period}}' = 'All Time'      THEN CAST('2015-07-30' AS DATE)
+      ELSE CURRENT_DATE - INTERVAL '30' day
+    END AS start_date
+),
+
+address AS (
+  SELECT FROM_HEX(LOWER(REPLACE(TRIM('{{wallet address:}}'), '0x', ''))) AS addr
 ),
 
 all_events AS (
   SELECT DATE_TRUNC('day', block_time) AS day, 1 AS tx, 0 AS internal, 0 AS erc20, 0 AS erc721, 0 AS erc1155
-  FROM ethereum.transactions, address WHERE "from" = addr OR "to" = addr
+  FROM ethereum.transactions
+  CROSS JOIN address 
+  CROSS JOIN time_filter 
+  WHERE ("from" = addr OR "to" = addr) AND block_time >= start_date
   
   UNION ALL
   
   SELECT DATE_TRUNC('day', block_time), 0, 1, 0, 0, 0
-  FROM ethereum.traces, address WHERE "from" = addr OR "to" = addr
+  FROM ethereum.traces
+  CROSS JOIN address 
+  CROSS JOIN time_filter 
+  WHERE ("from" = addr OR "to" = addr) AND block_time >= start_date
   
   UNION ALL
   
   SELECT DATE_TRUNC('day', evt_block_time), 0, 0, 1, 0, 0
-  FROM erc20_ethereum.evt_Transfer, address WHERE "from" = addr OR "to" = addr
+  FROM erc20_ethereum.evt_Transfer
+  CROSS JOIN address 
+  CROSS JOIN time_filter 
+  WHERE ("from" = addr OR "to" = addr) AND evt_block_time >= start_date
   
   UNION ALL
   
   SELECT DATE_TRUNC('day', evt_block_time), 0, 0, 0, 1, 0
-  FROM erc721_ethereum.evt_Transfer, address WHERE "from" = addr OR "to" = addr
+  FROM erc721_ethereum.evt_Transfer
+  CROSS JOIN address 
+  CROSS JOIN time_filter 
+  WHERE ("from" = addr OR "to" = addr) AND evt_block_time >= start_date
   
   UNION ALL
   
   SELECT DATE_TRUNC('day', evt_block_time), 0, 0, 0, 0, 1
-  FROM erc1155_ethereum.evt_TransferSingle, address WHERE "from" = addr OR "to" = addr
+  FROM erc1155_ethereum.evt_TransferSingle
+  CROSS JOIN address 
+  CROSS JOIN time_filter 
+  WHERE ("from" = addr OR "to" = addr) AND evt_block_time >= start_date
   
   UNION ALL
   
   SELECT DATE_TRUNC('day', evt_block_time), 0, 0, 0, 0, 1
-  FROM erc1155_ethereum.evt_TransferBatch, address WHERE "from" = addr OR "to" = addr
+  FROM erc1155_ethereum.evt_TransferBatch
+  CROSS JOIN address 
+  CROSS JOIN time_filter 
+  WHERE ("from" = addr OR "to" = addr) AND evt_block_time >= start_date
 ),
 
 daily_stats AS (
